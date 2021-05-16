@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { SetStateAction } from 'react'
 
 import './search-panel.css'
 
-const SearchPanel = ({ onSearchChange }) => {
-  const onSearchChanged = (event) => {
+const SearchPanel = ({ onSearchChange }: { onSearchChange: (term: SetStateAction<string>) => void }) => {
+  const onSearchChanged = (event: { target: { value: string } }): void => {
     onSearchChange(event.target.value)
   }
 

@@ -3,7 +3,15 @@ import React from 'react'
 import ToDoListItem from '../todo-list-item/todo-list-item'
 import './todo-list.css'
 
-const ToDoList = ({ todos, onDeleted, updateToDoItem }) => {
+const ToDoList = ({
+  todos,
+  onDeleted,
+  updateToDoItem,
+}: {
+  todos: { done: boolean; id: number; important: boolean; label: string }[]
+  onDeleted: any
+  updateToDoItem: any
+}) => {
   const elements = todos.map((item) => {
     const { ...itemProps } = item
 

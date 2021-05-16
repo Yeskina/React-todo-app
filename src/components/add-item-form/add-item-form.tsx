@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 
 import './add-item-form.css'
 
-function AddItemForm({ onItemAdded }) {
+
+const AddItemForm = ({ onItemAdded }: {onItemAdded: (text: string) => void}) => {
   const [label, setLabel] = useState('')
 
-  const onSubmit = (event) => {
+  const onSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault()
     onItemAdded(label)
     setLabel('')

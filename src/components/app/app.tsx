@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, SetStateAction } from 'react'
 
 import AppHeader from '../app-header/app-header'
 import SearchPanel from '../search-panel/search-panel'
@@ -8,9 +8,9 @@ import AddItemForm from '../add-item-form/add-item-form'
 
 import './app.css'
 
-let maxId = 100
+let maxId: number = 100
 
-const createToDoItem = (label) => {
+const createToDoItem = (label: string) => {
   return {
     label,
     important: false,
@@ -19,9 +19,9 @@ const createToDoItem = (label) => {
   }
 }
 
-function App() {
+const App = () => {
   const initialTodos = localStorage.getItem('todos')
-    ? JSON.parse(localStorage.getItem('todos'))
+    ? JSON.parse(localStorage.getItem('todos') || '[]')
     : [
         createToDoItem('Drink some tea'),
         createToDoItem('Build React app'),
@@ -37,36 +37,42 @@ function App() {
     localStorage.setItem('todos', JSON.stringify(toDoData))
   }, [toDoData])
 
-  const updateToDoItem = (id, updatedToDoItem) => {
-    setToDoData((prevState) =>
+  const updateToDoItem = (id: number, updatedToDoItem: void): void => {
+    setToDoData((prevState: { done: boolean; id: number; important: boolean; label: string }[]) =>
       prevState.map((element) => (element.id === id ? updatedToDoItem : element))
     )
   }
 
-  const deleteItem = (id) => {
-    setToDoData((prevState) => prevState.filter((item) => item.id !== id))
+  const deleteItem = (id: number): void => {
+    setToDoData((prevState: { done: boolean; id: number; important: boolean; label: string }[]) =>
+      prevState.filter((item) => item.id !== id)
+    )
   }
 
-  const addItem = (text) => {
+  const addItem = (text: string): void => {
     const newItem = createToDoItem(text)
 
-    setToDoData((prevState) => [...prevState, newItem])
+    setToDoData((prevState: Array<string>) => [...prevState, newItem])
   }
 
-  const onSearchChange = (term) => {
+  const onSearchChange = (term: SetStateAction<string>): void => {
     setTerm(term)
   }
 
-  const onFilterChange = (filter) => {
+  const onFilterChange = (filter: SetStateAction<string>): void => {
     setFilterType(filter)
   }
 
-  const search = (items, term) => {
+  const search = (
+    items: { done: boolean; id: number; important: boolean; label: string }[],
+    term: string
+  ) => {
+
     if (term.length === 0) return items
     return items.filter((item) => item.label.toLowerCase().includes(term.toLowerCase()))
   }
 
-  const filter = (items, type) => {
+  const filter = (items: { done: boolean; id: number; important: boolean; label: string }[], type: string) => {
     switch (type) {
       case 'all':
         return items

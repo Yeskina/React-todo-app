@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { SetStateAction } from 'react'
 import clsx from 'clsx'
 
 import './item-status-filter.css'
 
-const ItemStatusFilter = ({ filter, onFilterChange }) => {
+
+const ItemStatusFilter = ({ filter, onFilterChange }: {filter: string, onFilterChange: (filter: SetStateAction<string>) => void}) => {
   const buttonsAll = [
     { name: 'all', label: 'All' },
     { name: 'active', label: 'Active' },
